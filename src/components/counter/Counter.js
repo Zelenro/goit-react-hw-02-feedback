@@ -12,15 +12,28 @@ export class Counter extends Component {
       good: prevState.good + 1,
     }));
   };
+
   handleClickNeutral = () => {
     this.setState(prevState => ({
       neutral: prevState.neutral + 1,
     }));
   };
+
   handleClickBad = () => {
     this.setState(prevState => ({
       bad: prevState.bad + 1,
     }));
+  };
+
+  countTotalFeedback = () => {
+    const { good, neutral, bad } = this.state;
+    return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    return total === 0 ? 0 : Math.round((good * 100) / total);
   };
 
   render() {
@@ -35,6 +48,8 @@ export class Counter extends Component {
         <p>Good: {this.state.good}</p>
         <p>Neutral: {this.state.neutral}</p>
         <p>Bad: {this.state.bad}</p>
+        <p>Total: {this.countTotalFeedback()}</p>
+        <p>Positive feedback: {this.countPositiveFeedbackPercentage()}%</p>
       </div>
     );
   }
